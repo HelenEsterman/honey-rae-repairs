@@ -6,6 +6,7 @@ export const App = () => {
   const [tickets, setTickets] = useState([]);
   const [emergencyOnly, setEmergencyOnly] = useState(false);
   const [filteredTickets, setFilteredTickets] = useState([]);
+  const [nonEmergencyOnly, setNonEmergencyOnly] = useState(false);
   useEffect(() => {
     getAllTickets().then((ticketsArray) => {
       setTickets(ticketsArray);
@@ -14,7 +15,12 @@ export const App = () => {
   }, []);
 
   useEffect(() => {
-    if (emergencyOnly) {
+    if (nonEmergencyOnly) {
+      const nonEmergencyTickets = tickets.filter(
+        (ticket) => ticket.emergency === false
+      );
+      setFilteredTickets(nonEmergencyTickets);
+    } else if (emergencyOnly) {
       const emergencyTickets = tickets.filter(
         (ticket) => ticket.emergency === true
       );
@@ -22,7 +28,7 @@ export const App = () => {
     } else {
       setFilteredTickets(tickets);
     }
-  }, [emergencyOnly, tickets]);
+  }, [emergencyOnly, nonEmergencyOnly, tickets]);
   return (
     <div className="tickets-container">
       <h2>Tickets</h2>
@@ -31,14 +37,25 @@ export const App = () => {
           className="filter-btn btn-primary"
           onClick={() => {
             setEmergencyOnly(true);
+            setNonEmergencyOnly(false);
           }}
         >
           Emergency
         </button>
         <button
+          className="filter-btn btn-secondary"
+          onClick={() => {
+            setNonEmergencyOnly(true);
+            setEmergencyOnly(false);
+          }}
+        >
+          Non Emergencies
+        </button>
+        <button
           className="filter-btn btn-info"
           onClick={() => {
             setEmergencyOnly(false);
+            setNonEmergencyOnly(false);
           }}
         >
           Show All
