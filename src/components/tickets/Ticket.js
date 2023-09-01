@@ -4,32 +4,35 @@ import {
   getEmployeeById,
 } from "../../services/employeeService";
 
-export const Ticket = ({ ticket, name }) => {
-  //   const [employees, setEmployees] = useState([]);
-  const [assignedEmployee, setAssignedEmployee] = useState(); //empty object in parenthesis if using commented out code instead of pioneer task
+export const Ticket = ({ ticket }) => {
+  //don't need employees useState when trying to fine assigned employee through the employee ID
+  const [employees, setEmployees] = useState([]);
+  const [assignedEmployee, setAssignedEmployee] = useState({}); //nothing in parenthesis when trying to fine assigned employee through the employee ID
 
-  //   useEffect(() => {
-  //     getAllEmployees().then((employeesArray) => {
-  //       setEmployees(employeesArray);
-  //     });
-  //   }, []);
-
-  //   useEffect(() => {
-  //     const foundEmployee = employees.find(
-  //       (employee) => employee.id === ticket.employeeTickets[0]?.employeeId
-  //     );
-  //     setAssignedEmployee(foundEmployee);
-  //   }, [employees, ticket]);
+  //don't need all this when trying to fine assigned employee through the employee ID
+  useEffect(() => {
+    getAllEmployees().then((employeesArray) => {
+      setEmployees(employeesArray);
+    });
+  }, []);
 
   useEffect(() => {
-    if (ticket.employeeTickets.length) {
-      getEmployeeById(ticket.employeeTickets[0].employeeId).then(
-        (employeeObj) => {
-          setAssignedEmployee(employeeObj);
-        }
-      );
-    }
-  }, [ticket]);
+    const foundEmployee = employees.find(
+      (employee) => employee.id === ticket.employeeTickets[0]?.employeeId
+    );
+    setAssignedEmployee(foundEmployee);
+  }, [employees, ticket]);
+
+  //this function can be used when trying to fine assigned employee through the employee ID
+  //   useEffect(() => {
+  //     if (ticket.employeeTickets.length) {
+  //       getEmployeeById(ticket.employeeTickets[0].employeeId).then(
+  //         (employeeObj) => {
+  //           setAssignedEmployee(employeeObj);
+  //         }
+  //       );
+  //     }
+  //   }, [ticket]);
   return (
     <section className="ticket">
       <header className="ticket-info">#{ticket.id}</header>
