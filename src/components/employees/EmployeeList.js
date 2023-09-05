@@ -1,5 +1,5 @@
 import { getAllEmployeesInfo } from "../../services/employeeService";
-import { User } from "../../user/User";
+import { User } from "../user/User";
 import "./Employees.css";
 import { useEffect, useState } from "react";
 
