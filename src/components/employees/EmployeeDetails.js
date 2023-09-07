@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import "./Employees.css";
 import { useParams } from "react-router-dom";
-import { getEmployeeById } from "../../services/employeeService";
+import { getEmployeeByUserId } from "../../services/employeeService";
 
 export const EmployeeDetails = () => {
   const [employee, setEmployee] = useState({});
   const { employeeId } = useParams();
 
   useEffect(() => {
-    getEmployeeById(employeeId).then((employeeObj) => {
+    getEmployeeByUserId(employeeId).then((employeeData) => {
+      const employeeObj = employeeData[0];
       setEmployee(employeeObj);
     });
   }, [employeeId]);

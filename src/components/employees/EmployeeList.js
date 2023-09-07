@@ -1,4 +1,4 @@
-import { getAllEmployees } from "../../services/employeeService";
+import { getAllEmployeesInfo } from "../../services/employeeService";
 import { User } from "../user/User";
 import "./Employees.css";
 import { useEffect, useState } from "react";
@@ -8,7 +8,7 @@ export const EmployeeList = () => {
   const [employeeArray, setEmployeeArray] = useState([]);
 
   useEffect(() => {
-    getAllEmployees().then((employeeObj) => {
+    getAllEmployeesInfo().then((employeeObj) => {
       setEmployeeArray(employeeObj);
     });
   }, []);
@@ -17,7 +17,7 @@ export const EmployeeList = () => {
       {employeeArray.map((employee) => {
         return (
           <Link to={`/employees/${employee.id}`} key={employee.id}>
-            <User user={employee.user} />
+            <User user={employee} />
           </Link>
         );
       })}
